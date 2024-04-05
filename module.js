@@ -31,8 +31,9 @@ module.exports = interval => {
 			sleep(interval)
 		)
 	} catch (notAsync) { /* https://github.com/jochemstoel/nodejs-system-sleep/issues/4 */
+		// Fixing this so it will work with electron
 		require('child_process').execSync(
-			`"${process.execPath}"` + " -e \"setTimeout(function () { return true; }, " + interval + ");\""
+			"node -e \"setTimeout(function () { return true; }, " + interval + ");\""
 		)
 		return null
 	}
